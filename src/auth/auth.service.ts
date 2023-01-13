@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserRole, Users } from './user.entity';
 import { Brands } from 'src/brand/brand.entity';
@@ -15,29 +15,6 @@ export class AuthService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    // const flydubaiBrand = await this.brandRepository.findOne({
-    //   where: { name: 'Fly Dubai' },
-    //   relations: ['managers'],
-    // });
-    // const lufthansaBrand = await this.brandRepository.findOne({
-    //   where: { name: 'Lufthansa' },
-    //   relations: ['managers'],
-    // });
-
-    // const brandsResult = await this.brandRepository.upsert(
-    //   [
-    //     {
-    //       id: null,
-    //       name: 'Fly Dubai',
-    //     },
-    //     {
-    //       id: null,
-    //       name: 'Lufthansa',
-    //     },
-    //   ],
-    //   ['name'],
-    // );
-
     const brandsResult = await this.brandRepository
       .createQueryBuilder()
       .insert()
@@ -53,31 +30,6 @@ export class AuthService implements OnModuleInit {
       ])
       .orIgnore()
       .execute();
-
-    // await this.userRepository.upsert(
-    //   [
-    //     {
-    //       id: null,
-    //       email: 'influencer1@mail.com',
-    //       password: bcrypt.hashSync('password', bcrypt.genSaltSync()),
-    //     },
-    //     {
-    //       id: null,
-    //       email: 'manager1@flydubai.com',
-    //       password: bcrypt.hashSync('password', bcrypt.genSaltSync()),
-    //       role: UserRole.BRAND_MANAGER,
-    //       brand: brandsResult.identifiers[0],
-    //     },
-    //     {
-    //       id: null,
-    //       email: 'manager1@lufthansa.com',
-    //       password: bcrypt.hashSync('password', bcrypt.genSaltSync()),
-    //       role: UserRole.BRAND_MANAGER,
-    //       brand: brandsResult.identifiers[1],
-    //     },
-    //   ],
-    //   ['email'],
-    // );
 
     await this.userRepository
       .createQueryBuilder()

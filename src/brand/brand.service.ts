@@ -6,6 +6,7 @@ import { Assets, AssetStatus } from 'src/influencer/asset.entity';
 import { FindOptionsWhere, In, Repository } from 'typeorm';
 import { Brands } from './brand.entity';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const JSZip = require('jszip');
 
 export class IncorrectAssetStatusError extends Error {}
